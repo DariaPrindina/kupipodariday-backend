@@ -7,11 +7,11 @@ export class CreateUserDto {
 
   @Length(2, 200)
   @IsString()
-  about: string;
+  about?: string;
 
   @IsUrl()
   @IsString()
-  avatar: string;
+  avatar?: string;
 
   @IsEmail()
   @IsString()

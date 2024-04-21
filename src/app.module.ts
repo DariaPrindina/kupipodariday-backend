@@ -10,15 +10,17 @@ import { Wish } from './wishes/entities/wish.entity';
 import { Wishlist } from './wishlists/entities/wishlist.entity';
 import { Offer } from './offers/entities/offer.entity';
 import { HashModule } from './hash/hash.module';
+import { AuthModule } from './auth/auth.module';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: '127.0.0.1',
       port: 5432,
-      username: 'student',
-      password: 'student',
+      username: 'postgres',
+      password: '1909',
       database: 'kupipodariday',
       entities: [User, Wish, Wishlist, Offer],
       synchronize: true,
@@ -28,8 +30,9 @@ import { HashModule } from './hash/hash.module';
     OffersModule,
     WishesModule,
     HashModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [AppService],
 })
 export class AppModule {}

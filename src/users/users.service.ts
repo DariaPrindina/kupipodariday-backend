@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { Wish } from '../wishes/entities/wish.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { HashService } from 'src/hash/hash.service';
+import { FindUserDto } from './dto/find-user.dto';
+import { HashService } from '../hash/hash.service';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +14,8 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private hashService: HashService,
+    @InjectRepository(Wish)
+    private wishRepository: Repository<Wish>,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -34,9 +38,36 @@ export class UsersService {
     return user;
   }
 
+  async findMyWishes(id: number) {
+    const wishes = await this.wishRepository.find({
+      where: { owner: { id } },
+    });
+    return wishes;
+  }
+
+  async findUserWishes(id: number) {
+    const userWishes = await this.wishRepository.find({
+      where: { owner: { id } },
+      relations: ['owner'],
+    });
+    return userWishes;
+  }
+
+  async findOneUserByName(username: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ username });
+    return user;
+  }
+
+  async findMany({ query }: FindUserDto): Promise<User[]> {
+    const foundedUsers = this.userRepository.find({
+      where: [{ username: query }, { email: query }],
+    });
+    return foundedUsers;
+  }
+
   async updateOneById(id: number, updateUserDto: UpdateUserDto) {
     const { password, ...rest } = updateUserDto;
-    if (updateUserDto.password) {
+    if (password) {
       const hashPassword = await this.hashService.createHash(password);
       const updateUser = await this.userRepository.update(id, {
         ...rest,
