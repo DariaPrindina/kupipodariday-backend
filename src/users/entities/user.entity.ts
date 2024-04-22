@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import {
   IsNumber,
   IsDate,
@@ -18,11 +25,11 @@ export class User {
   @IsNumber()
   id: number;
 
-  @Column()
+  @CreateDateColumn()
   @IsDate()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;
 

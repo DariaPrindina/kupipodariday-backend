@@ -5,6 +5,8 @@ import {
   ManyToOne,
   OneToMany,
   ManyToMany,
+  UpdateDateColumn,
+  CreateDateColumn,
 } from 'typeorm';
 import { IsNumber, IsDate, Length, IsUrl } from 'class-validator';
 import { User } from '../../users/entities/user.entity';
@@ -17,11 +19,11 @@ export class Wish {
   @IsNumber()
   id: number;
 
-  @Column()
+  @CreateDateColumn()
   @IsDate()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;
 

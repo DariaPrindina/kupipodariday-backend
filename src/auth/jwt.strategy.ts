@@ -12,14 +12,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.get<string>('jwt_secret') || 'jwt_secret',
+      secretOrKey: 'jwtsecret',
     });
   }
 
   async validate(jwtPayload: { sub: number }) {
     const user = this.usersService.findOneById(jwtPayload.sub);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Ошибка авторизации');
     }
     return user;
   }

@@ -4,6 +4,8 @@ import {
   Column,
   ManyToMany,
   ManyToOne,
+  UpdateDateColumn,
+  CreateDateColumn,
 } from 'typeorm';
 import { IsNumber, IsDate, Length, MaxLength } from 'class-validator';
 import { Wish } from '../../wishes/entities/wish.entity';
@@ -15,11 +17,11 @@ export class Wishlist {
   @IsNumber()
   id: number;
 
-  @Column()
+  @CreateDateColumn()
   @IsDate()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;
 

@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { IsNumber, IsDate, IsBoolean } from 'class-validator';
 import { User } from '../../users/entities/user.entity';
 import { Wish } from '../../wishes/entities/wish.entity';
@@ -9,11 +16,11 @@ export class Offer {
   @IsNumber()
   id: number;
 
-  @Column()
+  @CreateDateColumn()
   @IsDate()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;
 
