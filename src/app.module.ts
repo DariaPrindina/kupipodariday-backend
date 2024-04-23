@@ -11,6 +11,9 @@ import { Offer } from './offers/entities/offer.entity';
 import { HashModule } from './hash/hash.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import dotenv = require('dotenv');
+
+dotenv.config();
 
 @Module({
   imports: [
