@@ -14,11 +14,11 @@ import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
 import { JwtGuard } from '../auth/jwt.guard';
 
-@UseGuards(JwtGuard)
 @Controller('wishes')
 export class WishesController {
   constructor(private readonly wishesService: WishesService) {}
 
+  @UseGuards(JwtGuard)
   @Post('')
   async create(@Req() req, @Body() createWishDto: CreateWishDto) {
     const createdWish = await this.wishesService.create(
@@ -40,12 +40,14 @@ export class WishesController {
     return topWishes;
   }
 
+  @UseGuards(JwtGuard)
   @Get(':id')
   findOne(@Param('id') wishId: string) {
     const wish = this.wishesService.findOneWishById(+wishId);
     return wish;
   }
 
+  @UseGuards(JwtGuard)
   @Patch(':id')
   async update(
     @Req() req,
@@ -60,12 +62,14 @@ export class WishesController {
     return updateWish;
   }
 
+  @UseGuards(JwtGuard)
   @Delete(':id')
   removeOne(@Param('id') wishId: string) {
     const deletedWish = this.wishesService.removeWishById(+wishId);
     return deletedWish;
   }
 
+  @UseGuards(JwtGuard)
   @Post(':id/copy')
   async copyWish(@Req() req, @Param('id') id: number) {
     const copiedWish = await this.wishesService.copyAnotherUserWish(
